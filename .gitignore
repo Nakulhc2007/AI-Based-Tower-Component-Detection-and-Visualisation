@@ -20,3 +20,4 @@ Thumbs.db
 # Uncomment the line below if your repo has size limits:
 # sample/
 *.pt
+*.zip

@@ -5,7 +5,7 @@ Verifies that all images in train/val/test have valid YOLO annotations.
 
 from pathlib import Path
 
-DATASET_DIR = Path(r"a:\projects\ksit hackathon\AI-Based-Tower-Component-Detection-and-Visualisation\dataset")
+DATASET_DIR = Path(r"a:\projects\ksit hackathon\dataset")
 CLASSES = {0: "Supporting Tower", 1: "Monopole Tower"}
 
 def verify_dataset():
