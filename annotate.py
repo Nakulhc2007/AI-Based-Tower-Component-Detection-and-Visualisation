@@ -14,7 +14,7 @@ import webbrowser
 import urllib.parse
 from pathlib import Path
 
-DATASET_DIR = Path(r"a:\projects\ksit hackathon\dataset")
+DATASET_DIR = Path(__file__).resolve().parent / "dataset"
 PORT = 8787
 
 

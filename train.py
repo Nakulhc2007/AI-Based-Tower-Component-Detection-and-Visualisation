@@ -11,8 +11,9 @@ import argparse
 from pathlib import Path
 from ultralytics import YOLO
 
-DATASET_YAML = Path(r"a:\projects\ksit hackathon\dataset\data.yaml")
-PROJECT_DIR = Path(r"a:\projects\ksit hackathon\runs")
+BASE_DIR = Path(__file__).resolve().parent
+DATASET_YAML = BASE_DIR / "dataset" / "data.yaml"
+PROJECT_DIR = BASE_DIR / "runs"
 
 
 def train(resume=False):
@@ -93,7 +94,7 @@ def predict():
         return
 
     model = YOLO(str(best_weight))
-    test_dir = Path(r"a:\projects\ksit hackathon\dataset\images\test")
+    test_dir = BASE_DIR / "dataset" / "images" / "test"
 
     results = model.predict(
         source=str(test_dir),
