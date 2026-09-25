@@ -61,7 +61,7 @@ async def predict_image(file: UploadFile = File(...)):
     # 2. INFERENCE (LOCAL PYTORCH MODEL)
     # ==========================================
     # We raised confidence to 0.45 and added iou=0.45 to prevent double-labelling!
-    results = model.predict(source=img, conf=0.45, iou=0.45)
+    results = model.predict(source=img, conf=0.20, iou=0.45)
     
     # Extract predictions
     preds = []
