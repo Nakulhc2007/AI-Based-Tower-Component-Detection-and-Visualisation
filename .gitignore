@@ -1,0 +1,22 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# YOLO training runs (large files — download best.pt separately)
+runs/
+
+# UV lock file is fine to commit
+# uv.lock
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Raw images (too large for git — ~750MB)
+# Uncomment the line below if your repo has size limits:
+# sample/
+*.pt
