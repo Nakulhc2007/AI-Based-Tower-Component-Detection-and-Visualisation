@@ -1,9 +1,9 @@
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from ultralytics import YOLO
 import cv2
 import numpy as np
-import requests
 import base64
 
 app = FastAPI(title="Tower Detection API")
@@ -16,14 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-ROBOFLOW_API_URL = "https://detect.roboflow.com/abhista-ganesh/tower-type-detection-avzfo-3-yolo26s-t1"
-ROBOFLOW_API_KEY = "s3MTtPRyVUy8zpa3vJRF"
+# Load your custom-trained hackathon model locally!
+print("Loading local PyTorch model (best.pt)...")
+model = YOLO("best.pt")
 
 @app.post("/predict")
 async def predict_image(file: UploadFile = File(...)):
     """
     Accepts an image, performs independent image quality filtering (blur, exposure),
-    sends it to Roboflow, draws bounding boxes, calculates average confidence, 
+    runs the local PyTorch YOLO model, draws bounding boxes, calculates average confidence, 
     and returns a JSON with the image and stats.
     """
     contents = await file.read()
@@ -35,63 +36,73 @@ async def predict_image(file: UploadFile = File(...)):
     # ==========================================
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     
-    # Check for Blur (Variance of the Laplacian)
     blur_score = cv2.Laplacian(gray, cv2.CV_64F).var()
     print(f"--> Incoming Image Sharpness Score: {blur_score:.1f}")
-    
-    # We raised the threshold from 50 to 300 to be much stricter!
-    if blur_score < 300:
+    if blur_score < 10:  # Dropped from 800 to 10 (Only blocks extreme blur)
         return JSONResponse(status_code=400, content={
             "error": "Quality Check Failed", 
-            "reason": f"Image is blurry (sharpness score: {blur_score:.1f} < 300). Cannot guarantee accurate inference."
+            "reason": f"Image is extremely blurry (sharpness score: {blur_score:.1f} < 10). Cannot guarantee accurate inference."
         })
     
-    # Check for Exposure (Average Pixel Brightness)
     avg_brightness = np.mean(gray)
     print(f"--> Incoming Image Brightness Score: {avg_brightness:.1f}")
-    
-    # Raised from 30 to 80 for stricter darkness checks
-    if avg_brightness < 80:
+    if avg_brightness < 10:  # Dropped from 40 to 10 (Only blocks pitch-black)
         return JSONResponse(status_code=400, content={
             "error": "Quality Check Failed", 
-            "reason": f"Image is underexposed/too dark (brightness: {avg_brightness:.1f} < 80)."
+            "reason": f"Image is underexposed/too dark (brightness: {avg_brightness:.1f} < 10)."
         })
-    # Lowered from 225 to 200 for stricter brightness checks
-    if avg_brightness > 200:
+    if avg_brightness > 245:  # Raised to 245 (Only blocks pure white)
         return JSONResponse(status_code=400, content={
             "error": "Quality Check Failed", 
-            "reason": f"Image is overexposed/too bright (brightness: {avg_brightness:.1f} > 200)."
+            "reason": f"Image is overexposed/too bright (brightness: {avg_brightness:.1f} > 245)."
         })
 
     # ==========================================
-    # 2. INFERENCE (ROBOFLOW)
+    # 2. INFERENCE (LOCAL PYTORCH MODEL)
     # ==========================================
-    img_base64 = base64.b64encode(contents).decode("utf-8")
-    url = f"{ROBOFLOW_API_URL}?api_key={ROBOFLOW_API_KEY}"
+    # We raised confidence to 0.45 and added iou=0.45 to prevent double-labelling!
+    results = model.predict(source=img, conf=0.45, iou=0.45)
     
-    try:
-        resp = requests.post(url, data=img_base64, headers={"Content-Type": "application/x-www-form-urlencoded"})
-        preds = resp.json().get("predictions", [])
-    except Exception as e:
-        print("Error communicating with Roboflow:", e)
-        preds = []
+    # Extract predictions
+    preds = []
+    for r in results:
+        boxes = r.boxes
+        for box in boxes:
+            x1, y1, x2, y2 = box.xyxy[0].tolist()
+            conf = float(box.conf[0])
+            cls_id = int(box.cls[0])
+            # Format names from "monopole_tower" to "Monopole Tower"
+            cls_name = model.names[cls_id].replace('_', ' ').title()
+            
+            # Convert to center x, y, w, h
+            w = x2 - x1
+            h = y2 - y1
+            x = x1 + w / 2
+            y = y1 + h / 2
+            
+            preds.append({
+                "class": cls_name,
+                "confidence": conf,
+                "x": x,
+                "y": y,
+                "width": w,
+                "height": h
+            })
 
     # ==========================================
     # 3. DRAW BOXES & CALCULATE STATS
     # ==========================================
-    class_stats = {} # Stores totals to calculate average later
+    class_stats = {} 
     
     for p in preds:
         x, y, w, h = int(p['x']), int(p['y']), int(p['width']), int(p['height'])
         cls, conf = p['class'], p['confidence']
         
-        # Track stats
         if cls not in class_stats:
             class_stats[cls] = {"total_conf": 0.0, "count": 0}
         class_stats[cls]["total_conf"] += conf
         class_stats[cls]["count"] += 1
         
-        # Draw box
         x1, y1 = int(x - w / 2), int(y - h / 2)
         x2, y2 = int(x + w / 2), int(y + h / 2)
         
