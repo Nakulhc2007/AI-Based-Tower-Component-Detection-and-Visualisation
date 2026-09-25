@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>AI Object Detection Dashboard</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"error-container":"#93000a","on-tertiary-fixed-variant":"#005236","surface-dim":"#0f131d","surface-tint":"#adc6ff","background":"#0f131d","secondary-fixed-dim":"#4cd7f6","on-secondary-container":"#00424e","surface-container":"#1c1f2a","surface-bright":"#353944","inverse-surface":"#dfe2f1","tertiary-container":"#00a572","on-tertiary":"#003824","on-primary-container":"#00285d","on-tertiary-fixed":"#002113","secondary":"#4cd7f6","on-error-container":"#ffdad6","on-primary-fixed-variant":"#004395","secondary-fixed":"#acedff","on-primary":"#002e6a","outline-variant":"#424754","surface-container-high":"#262a35","tertiary-fixed":"#6ffbbe","primary-fixed":"#d8e2ff","surface-container-highest":"#313540","on-background":"#dfe2f1","surface-variant":"#313540","outline":"#8c909f","on-primary-fixed":"#001a42","on-error":"#690005","on-surface-variant":"#c2c6d6","on-secondary-fixed":"#001f26","error":"#ffb4ab","tertiary-fixed-dim":"#4edea3","on-secondary-fixed-variant":"#004e5c","surface":"#0f131d","inverse-primary":"#005ac2","on-tertiary-container":"#00311f","on-surface":"#dfe2f1","primary":"#adc6ff","surface-container-low":"#171b26","secondary-container":"#03b5d3","on-secondary":"#003640","primary-container":"#4d8eff","primary-fixed-dim":"#adc6ff","inverse-on-surface":"#2c303b","tertiary":"#4edea3","surface-container-lowest":"#0a0e18"},borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},spacing:{"margin-desktop":"2rem","space-xs":"0.25rem","space-xl":"2rem","space-md":"1rem","margin":"1rem","gutter":"1rem","gutter-desktop":"1.5rem","space-lg":"1.5rem","space-sm":"0.5rem"},fontFamily:{"label-md":["Inter"],"body-md":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"headline-xl-mobile":["Inter"],"headline-sm":["Inter"],"label-sm":["Inter"],"headline-xl":["Inter"],"body-sm":["Inter"],"code-md":["JetBrains Mono"],"body-lg":["Inter"],"code-sm":["JetBrains Mono"]},fontSize:{"label-md":["13px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-sm":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.05em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"700"}],"body-sm":["12px",{"lineHeight":"18px","fontWeight":"400"}],"code-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"code-sm":["11px",{"lineHeight":"16px","fontWeight":"500"}]}}}}</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/85 backdrop-blur-xl shadow-[0_1px_12px_rgba(0,0,0,0.45)]"><div class="h-16 w-full px-gutter md:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg min-w-0"><div class="flex items-center gap-space-sm"><img alt="VisionPulse AI Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1UlQdNkHT2a_dPfO7Czg5etGq5UB4C_cpejNCY_JxwX_Fbc14YceOttXFkXatiB0H4lcmkDqoUhBoXLzRXTx9JeWc91bydXaozddVPMEPgG3tIYF1HHVweIxxLZbsXNG1msCmn9_SJNZpxCJqXck-ZbR4sr2U6SZGWmAo7XSi9s3p-1m2vmCOp6kY0Iuo-kbP49_j0YJUreVTCggBXev3yKjQr2A12WNzuvc11Ml4e8ljD80m3JSen7gw"/><div class="flex flex-col truncate"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">AI Object Detection Dashboard</span><span class="font-code-sm text-code-sm text-outline mt-0.5 tracking-tight uppercase">Trained Model Inference System</span></div></div><div class="h-6 w-px bg-surface-container-highest hidden xl:block"></div><nav class="hidden lg:flex items-center gap-1 p-1 bg-surface-container-lowest rounded-xl" data-active-classes="bg-surface-container text-primary font-label-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] rounded-lg"><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" data-path="dashboard" href="#">Dashboard</a><a aria-current="page" class="px-space-md py-1.5 transition-all bg-surface-container text-primary font-label-md shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] rounded-lg" data-path="detection" href="#">Detection</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" data-path="history" href="#">History</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all" data-path="about" href="#">About</a></nav></div><div class="flex items-center gap-space-md flex-shrink-0"><div class="hidden 2xl:flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg font-code-sm text-code-sm text-outline"><span class="text-primary font-medium">YOLOv8x-Inference</span><span class="text-outline-variant">|</span><span>TensorRT FP16</span><span class="text-outline-variant">|</span><span class="text-secondary">Latency ~34ms</span></div><div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low shadow-[0_0_12px_rgba(78,222,163,0.15)]"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span></span><span class="font-label-sm text-label-sm text-tertiary tracking-wide uppercase">Model Online</span></div><div class="h-6 w-px bg-surface-container-highest hidden sm:block"></div><div class="flex items-center gap-space-sm pl-1"><div class="flex flex-col text-right hidden sm:flex"><span class="font-label-md text-label-md text-on-surface leading-tight">Dr. Elena Vance</span><span class="font-code-sm text-code-sm text-secondary-fixed-dim leading-none">CV Lab Lead</span></div><div class="relative flex-shrink-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-surface-container-high shadow-inner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4oC8OoVUYSXPGrSCJdv9fKGtQaboTfGKOAs-BOGSJamz5-w3hc-c42V1-mCaGNwKi0THRavlBIdYvDlwu2BXzBDn5nmMvXMQgu2PIhpWrejAnV65nu1tHWFFu-PUO6nW17aj_a3AJgnB0MagnOOtt2Mjvl9sN9eVfs76-gAjNVOftx9Nvkk4IMoAj79JdRtaZYJNaS4syP7seQ8DNb7TcW9zYo_yELUFAH04-vTuLAXKIsHTLBtZG"/><span class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-tertiary ring-2 ring-surface-container-lowest"></span></div></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Subtle decorative ambient glow backdrops (strictly relative to section) -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-40 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<div class="absolute top-20 -left-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+<!-- 1. Hero & Welcome Section with Deep Telemetry Badges -->
+<section class="w-full px-gutter md:px-margin-desktop pt-6 pb-4">
+<div class="flex flex-col xl:flex-row xl:items-end justify-between gap-6 pb-6 border-b border-surface-container-highest/60">
+<div class="flex flex-col max-w-3xl">
+<div class="flex items-center gap-3 mb-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-high text-primary font-code-sm text-code-sm uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">neurology</span>
+              Neural Engine Active
+            </span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-low text-tertiary font-code-sm text-code-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+              Model Online (Healthy, 0 queues)
+            </span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">AI-Powered Object Detection</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mt-1">Upload an image and use our trained object detection model to identify objects automatically.</p>
+</div>
+<!-- Telemetry Chips Cluster -->
+<div class="flex flex-wrap items-center gap-2 font-code-sm text-code-sm text-on-surface-variant">
+<div class="px-3 py-1.5 rounded-lg bg-surface-container-low flex items-center gap-2">
+<span class="text-outline">MODEL</span>
+<span class="text-on-surface font-semibold">YOLOv8x-VisionPulse</span>
+</div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container-low flex items-center gap-2">
+<span class="text-outline">WEIGHTS</span>
+<span class="text-secondary font-semibold">v2.4-production</span>
+</div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container-low flex items-center gap-2">
+<span class="text-outline">mAP@50</span>
+<span class="text-tertiary font-semibold">92.4%</span>
+</div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container-low flex items-center gap-2">
+<span class="text-outline">LATENCY</span>
+<span class="text-primary font-semibold">38ms avg</span>
+</div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container-low hidden 2xl:flex items-center gap-2">
+<span class="text-outline">BACKEND</span>
+<span class="text-on-surface font-semibold">FastAPI + CUDA 12.2</span>
+</div>
+</div>
+</div>
+<!-- Demo Simulation Switcher (Judges / Reviewer quick toggles) -->
+<div class="flex flex-wrap items-center justify-between gap-3 mt-4 py-2.5 px-4 rounded-xl bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">tune</span>
+<span class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider">Demo Stage Controller:</span>
+<span class="font-body-sm text-body-sm text-outline hidden md:inline">Test interactive pipelines &amp; edge failure cases</span>
+</div>
+<div class="flex flex-wrap items-center gap-1.5">
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high font-code-sm text-code-sm text-on-surface transition" onclick="setWorkflowState('IDLE')" type="button">1. Idle</button>
+<button class="px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-code-sm text-code-sm font-semibold transition hover:brightness-110 flex items-center gap-1" onclick="triggerSimulationFlow()" type="button">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+            Full Auto Demo
+          </button>
+<button class="px-2.5 py-1 rounded bg-surface-container-high text-error font-code-sm text-code-sm hover:bg-surface-container-highest transition" onclick="setWorkflowState('QUALITY_FAILED')" type="button">Simulate Blur Failure</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-high text-error font-code-sm text-code-sm hover:bg-surface-container-highest transition" onclick="setWorkflowState('UPLOAD_FAILED')" type="button">Simulate Upload Failure</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-tertiary font-code-sm text-code-sm transition" onclick="setWorkflowState('COMPLETED')" type="button">Jump to Complete</button>
+</div>
+</div>
+</section>
+<!-- 3. Visual Stepper / Processing Pipeline Stage Indicator -->
+<section class="w-full px-gutter md:px-margin-desktop py-4">
+<div class="w-full p-4 md:p-6 rounded-2xl bg-surface-container-low shadow-sm">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+<!-- Step 01 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container transition-all" id="step-node-1">
+<div class="w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-primary text-on-primary flex-shrink-0" id="step-icon-1">
+              01
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-outline uppercase">Stage 01</span>
+<span class="font-label-md text-label-md text-on-surface truncate">Image Upload</span>
+<span class="font-code-sm text-code-sm text-secondary truncate" id="step-desc-1">Awaiting file</span>
+</div>
+</div>
+<!-- Step 02 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/60 transition-all" id="step-node-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-surface-container-highest text-outline flex-shrink-0" id="step-icon-2">
+              02
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-outline uppercase">Stage 02</span>
+<span class="font-label-md text-label-md text-on-surface truncate">Quality Check</span>
+<span class="font-code-sm text-code-sm text-outline truncate" id="step-desc-2">Laplacian pass</span>
+</div>
+</div>
+<!-- Step 03 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/60 transition-all" id="step-node-3">
+<div class="w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-surface-container-highest text-outline flex-shrink-0" id="step-icon-3">
+              03
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-outline uppercase">Stage 03</span>
+<span class="font-label-md text-label-md text-on-surface truncate">Object Detection</span>
+<span class="font-code-sm text-code-sm text-outline truncate" id="step-desc-3">TensorRT FP16</span>
+</div>
+</div>
+<!-- Step 04 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/60 transition-all" id="step-node-4">
+<div class="w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-surface-container-highest text-outline flex-shrink-0" id="step-icon-4">
+              04
+            </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-label-sm text-outline uppercase">Stage 04</span>
+<span class="font-label-md text-label-md text-on-surface truncate">Complete</span>
+<span class="font-code-sm text-code-sm text-outline truncate" id="step-desc-4">Spatial telemetry</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2 & 4. Primary Workflow Container (Multi-State Workspace) -->
+<section class="w-full px-gutter md:px-margin-desktop py-2">
+<!-- STATE A: IDLE / Drag & Drop Upload State -->
+<div class="w-full p-8 md:p-12 rounded-3xl bg-surface-container-low flex flex-col items-center justify-center text-center transition-all" id="view-idle">
+<div class="w-20 h-20 rounded-2xl bg-surface-container flex items-center justify-center text-primary mb-5 shadow-inner">
+<span class="material-symbols-outlined text-4xl">cloud_upload</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Drop your visual payload here</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg mt-2 mb-6">Supports high-res PNG, JPG, WEBP, or multi-frame bursts up to 30MB. Automatically evaluated through our Laplace Sharpness Engine before inference execution.</p>
+<div class="flex flex-wrap items-center justify-center gap-4">
+<label class="cursor-pointer px-6 py-3 rounded-xl bg-primary text-on-primary hover:bg-primary/90 font-label-md text-label-md font-semibold transition-all shadow-md shadow-primary/20 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">add_photo_alternate</span>
+<span>Browse Local Image</span>
+<input accept="image/*" class="hidden" id="local-file-input" onchange="handleFileSelect(this)" type="file"/>
+</label>
+<button class="px-5 py-3 rounded-xl bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md font-medium transition flex items-center gap-2" onclick="loadSampleImage('traffic')" type="button">
+<span class="material-symbols-outlined text-lg text-secondary">flash_on</span>
+            Load Traffic Demo 4K
+          </button>
+</div>
+<!-- Quick Sample Presets Selector -->
+<div class="w-full max-w-2xl mt-10 pt-6 border-t border-surface-container-highest/50">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider block mb-3">Or test with ready-to-run verification datasets:</span>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+<button class="p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition text-left group" onclick="loadSampleImage('traffic')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition">Traffic &amp; Pedestrians</span>
+<span class="material-symbols-outlined text-sm text-outline group-hover:text-primary transition">arrow_forward</span>
+</div>
+<span class="font-code-sm text-code-sm text-outline">4K City Junction • 14 Objs</span>
+</button>
+<button class="p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition text-left group" onclick="loadSampleImage('industrial')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition">Industrial Infrastructure</span>
+<span class="material-symbols-outlined text-sm text-outline group-hover:text-primary transition">arrow_forward</span>
+</div>
+<span class="font-code-sm text-code-sm text-outline">Factory Automation • 9 Objs</span>
+</button>
+<button class="p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition text-left group" onclick="loadSampleImage('warehouse')" type="button">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md text-on-surface group-hover:text-primary transition">Warehouse Logistics</span>
+<span class="material-symbols-outlined text-sm text-outline group-hover:text-primary transition">arrow_forward</span>
+</div>
+<span class="font-code-sm text-code-sm text-outline">Pallets &amp; Forklifts • 18 Objs</span>
+</button>
+</div>
+</div>
+</div>
+<!-- STATE B: UPLOADING progress bar -->
+<div class="hidden w-full p-8 md:p-12 rounded-3xl bg-surface-container-low flex flex-col items-center justify-center text-center" id="view-uploading">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center text-secondary mb-4 animate-bounce">
+<span class="material-symbols-outlined text-3xl">upload_file</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Transferring payload to edge cluster...</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 mb-6">Secure TLS 1.3 socket stream to FastAPI tensor endpoint</p>
+<div class="w-full max-w-md bg-surface-container-highest rounded-full h-3 overflow-hidden p-0.5 mb-3">
+<div class="bg-primary h-full rounded-full transition-all duration-300 w-1/4" id="upload-progress-fill"></div>
+</div>
+<div class="flex items-center justify-between w-full max-w-md font-code-sm text-code-sm text-outline">
+<span id="upload-status-text">Uploading payload: 25%</span>
+<span id="upload-speed-text">18.4 MB/s</span>
+</div>
+</div>
+<!-- STATE C & E: UPLOADED & QUALITY ACCEPTED Container with Preview -->
+<div class="hidden w-full flex flex-col gap-4" id="view-uploaded">
+<!-- Quality Accepted Notification Banner -->
+<div class="w-full p-4 rounded-2xl bg-surface-container-low flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" id="quality-accepted-banner">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary/20 text-tertiary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Image Quality Accepted</span>
+<span class="px-2 py-0.5 rounded-full bg-tertiary/10 text-tertiary font-code-sm text-code-sm">Laplace: 88.5 / 100</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">The uploaded payload meets required clarity standards (threshold &gt; 35, 0 motion artifacts detected). Ready for TensorRT object detection.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<span class="font-code-sm text-code-sm text-tertiary flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+              Ready to Detect
+            </span>
+</div>
+</div>
+<!-- File Card & Primary Trigger -->
+<div class="p-6 rounded-2xl bg-surface-container-low flex flex-col lg:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4 w-full lg:w-auto">
+<div class="w-24 h-20 rounded-xl overflow-hidden bg-surface-container-highest flex-shrink-0 relative">
+<img class="w-full h-full object-cover" data-alt="High-contrast ultra-high-definition bird's eye traffic intersection with cars, buses, and crossing pedestrians illuminated by clean daylight, ready for neural computer vision bounding box detection" id="uploaded-preview-thumb" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCTEdy73GhCzzB6yAWPY66uSHpPNTgewrkaG0cF3rnzXPxfGjteqvuod29sGJ2OnfYYH3MNCN15pCAs4Q_wSeqs2Ea9_lgQWybLhSAoHWQECGfmF-7OG1NSdemDPaTBfiajZwCnKBAj6HJMlfIMF_1A9OiyU0aZKqI9mlSsNfDROLqMEzUhIVMr7e13pCrIByK4peVDU9Vd5bPmRvGYQGWH1YG0f2sV6cL-2CynidwZkqulTu5lXjV"/>
+<div class="absolute inset-0 bg-surface-dim/20"></div>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface truncate" id="uploaded-filename">urban_traffic_inspection_4k.jpg</span>
+<div class="flex flex-wrap items-center gap-2 font-code-sm text-code-sm text-on-surface-variant mt-1">
+<span class="px-2 py-0.5 rounded bg-surface-container">2.4 MB</span>
+<span>•</span>
+<span class="px-2 py-0.5 rounded bg-surface-container">3840 x 2160</span>
+<span>•</span>
+<span class="text-secondary font-medium">sRGB 24-bit</span>
+</div>
+</div>
+</div>
+<!-- Execution Controls -->
+<div class="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-end">
+<button class="px-4 py-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition flex items-center gap-2" onclick="setWorkflowState('IDLE')" type="button">
+<span class="material-symbols-outlined text-lg">delete_sweep</span>
+              Replace File
+            </button>
+<button class="px-6 py-3 rounded-xl bg-primary text-on-primary hover:bg-primary/90 font-label-md text-label-md font-semibold transition shadow-lg shadow-primary/25 flex items-center gap-2" id="execute-detect-btn" onclick="startDetectionProcess()" type="button">
+<span class="material-symbols-outlined text-lg">radar</span>
+<span>Execute Detection</span>
+</button>
+</div>
+</div>
+</div>
+<!-- STATE D & F: DETECTING / SCANNING state -->
+<div class="hidden w-full p-8 md:p-12 rounded-3xl bg-surface-container-low flex flex-col items-center justify-center text-center relative overflow-hidden" id="view-detecting">
+<!-- Animated Scan Line -->
+<div class="absolute inset-0 pointer-events-none opacity-20 bg-gradient-to-b from-primary via-transparent to-transparent animate-pulse"></div>
+<div class="relative w-32 h-32 rounded-3xl bg-surface-container flex items-center justify-center text-primary mb-6 shadow-2xl">
+<span class="material-symbols-outlined text-5xl animate-spin">hub</span>
+<div class="absolute inset-0 rounded-3xl border-2 border-primary/40 animate-ping"></div>
+</div>
+<h3 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Analyzing image using trained model weights...</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mt-2 mb-6">Forward pass running on CUDA TensorRT cores. Extracting anchor features &amp; calculating IoU non-maximum suppression.</p>
+<!-- Live Telemetry Status Ticker -->
+<div class="p-3.5 px-6 rounded-xl bg-surface-container font-code-sm text-code-sm text-secondary flex items-center gap-3 shadow-inner">
+<span class="w-2 h-2 rounded-full bg-secondary animate-ping"></span>
+<span id="detecting-substep">Inference: Layer [28/32] ConvTranspose2d</span>
+<span class="text-outline">|</span>
+<span class="text-on-surface">FP16 Execution</span>
+</div>
+</div>
+<!-- STATE FAILURE: Blur Failure Alert Banner -->
+<div class="hidden w-full p-6 md:p-8 rounded-3xl bg-error-container/20 flex flex-col sm:flex-row items-start gap-5" id="view-quality-failed">
+<div class="w-12 h-12 rounded-2xl bg-error/20 text-error flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">error_outline</span>
+</div>
+<div class="flex flex-col flex-1">
+<div class="flex items-center gap-2">
+<h4 class="font-headline-md text-headline-md text-error">Image Quality Check Failed</h4>
+<span class="px-2.5 py-0.5 rounded-full bg-error/15 text-error font-code-sm text-code-sm">Laplacian Score: 18.2 &lt; 35 Threshold</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1.5">
+            The submitted payload suffers from significant motion blur and sub-threshold luminance variance. The trained neural network requires at least 35.0 Laplacian score to prevent bounding hallucinations.
+          </p>
+<div class="flex flex-wrap items-center gap-3 mt-4">
+<button class="px-4 py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-container-high transition" onclick="setWorkflowState('IDLE')" type="button">Upload Sharper Image</button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-semibold transition hover:brightness-110" onclick="loadSampleImage('traffic')" type="button">Use Verified 4K Sample</button>
+</div>
+</div>
+</div>
+<!-- STATE FAILURE: Upload Failed / Corrupt payload -->
+<div class="hidden w-full p-6 md:p-8 rounded-3xl bg-error-container/20 flex flex-col sm:flex-row items-start gap-5" id="view-upload-failed">
+<div class="w-12 h-12 rounded-2xl bg-error/20 text-error flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">cloud_off</span>
+</div>
+<div class="flex flex-col flex-1">
+<h4 class="font-headline-md text-headline-md text-error">Upload Failed: Unsupported or Truncated Payload</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1.5">
+            Socket stream was interrupted or file header does not conform to valid EXIF/JPEG/PNG binary specs. Please ensure uncorrupted raster formats.
+          </p>
+<div class="flex items-center gap-3 mt-4">
+<button class="px-4 py-2 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md font-semibold hover:bg-surface-container-high transition" onclick="setWorkflowState('IDLE')" type="button">Try Again</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 5 & 6 & 7. STATE G: COMPLETED - Detection Results & Dual View Output -->
+<div class="w-full flex flex-col gap-6 px-gutter md:px-margin-desktop py-4" id="view-completed">
+<!-- Success Notification Ribbon -->
+<div class="w-full p-4 rounded-2xl bg-tertiary-container/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary/20 text-tertiary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface">Detection Completed Successfully</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">14 visual entities tagged with IoU non-maximum suppression filter at 0.45 threshold.</p>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3.5 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-medium transition flex items-center gap-1.5" onclick="setWorkflowState('IDLE')" type="button">
+<span class="material-symbols-outlined text-base">refresh</span>
+            Detect New Image
+          </button>
+<button class="px-3.5 py-1.5 rounded-lg bg-primary text-on-primary hover:bg-primary/90 font-label-md text-label-md font-semibold transition flex items-center gap-1.5 shadow-sm" onclick="triggerDownloadResult()" type="button">
+<span class="material-symbols-outlined text-base">download</span>
+            Download Annotated
+          </button>
+</div>
+</div>
+<!-- Quick Telemetry Analytics Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="p-5 rounded-2xl bg-surface-container-low flex flex-col">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Objects Detected</span>
+<span class="material-symbols-outlined text-primary text-xl">category</span>
+</div>
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">14</span>
+<span class="font-code-sm text-code-sm text-tertiary mt-1">5 distinct classes identified</span>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container-low flex flex-col">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Peak Confidence</span>
+<span class="material-symbols-outlined text-secondary text-xl">verified</span>
+</div>
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">96.4%</span>
+<span class="font-code-sm text-code-sm text-secondary mt-1">Class: Car [BBox #01]</span>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container-low flex flex-col">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Mean Confidence</span>
+<span class="material-symbols-outlined text-tertiary text-xl">show_chart</span>
+</div>
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">92.1%</span>
+<span class="font-code-sm text-code-sm text-outline mt-1">Confidence cutoff &gt; 50%</span>
+</div>
+<div class="p-5 rounded-2xl bg-surface-container-low flex flex-col">
+<div class="flex items-center justify-between text-outline mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider">Total Latency</span>
+<span class="material-symbols-outlined text-primary text-xl">speed</span>
+</div>
+<span class="font-headline-xl text-headline-xl text-on-surface font-bold tracking-tight">38.2<span class="font-body-md text-body-md text-outline font-normal ml-1">ms</span></span>
+<span class="font-code-sm text-code-sm text-primary mt-1">Pre 4.1ms | Model 29.8ms | NMS 4.3ms</span>
+</div>
+</div>
+<!-- Side-by-Side Dual Comparison Workspace View -->
+<div class="w-full p-4 md:p-6 rounded-3xl bg-surface-container-low flex flex-col gap-4">
+<!-- Interactive Canvas Control Toolbar -->
+<div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-surface-container-highest/60">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface-container">
+<span class="material-symbols-outlined text-primary text-lg">tune</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold uppercase">Min Confidence:</span>
+<input class="w-24 md:w-32 accent-primary cursor-pointer" id="threshold-slider" max="95" min="30" oninput="updateConfidenceThreshold(this.value)" type="range" value="50"/>
+<span class="font-code-sm text-code-sm text-primary font-bold" id="threshold-value-display">50%</span>
+</div>
+<!-- Display Toggle Toggles -->
+<div class="hidden sm:flex items-center gap-1 bg-surface-container p-1 rounded-xl">
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-medium transition" id="toggle-boxes-btn" onclick="toggleOverlayLayer('boxes')" type="button">Boxes</button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-medium transition" id="toggle-labels-btn" onclick="toggleOverlayLayer('labels')" type="button">Labels</button>
+<button class="px-2.5 py-1 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm font-medium transition" id="toggle-scores-btn" onclick="toggleOverlayLayer('scores')" type="button">Confidence</button>
+</div>
+</div>
+<!-- Color Key Indicator -->
+<div class="flex flex-wrap items-center gap-2 font-code-sm text-code-sm">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-primary"><span class="w-2 h-2 rounded-full bg-primary"></span>Car</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-tertiary"><span class="w-2 h-2 rounded-full bg-tertiary"></span>Pedestrian</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-secondary"><span class="w-2 h-2 rounded-full bg-secondary"></span>Traffic Light</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-primary-fixed"><span class="w-2 h-2 rounded-full bg-primary-fixed"></span>Truck</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-surface-container text-tertiary-fixed"><span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>Bicycle</span>
+</div>
+</div>
+<!-- The Dual View Grid (Left: Raw, Right: Processed with Interactive Bounding Boxes) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+<!-- Left Column: Original Feed -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-2">
+<span class="font-label-md text-label-md text-on-surface font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+                Original Input Canvas (Source)
+              </span>
+<span class="font-code-sm text-code-sm text-outline">3840 x 2160 • Raw Sensor Data</span>
+</div>
+<div class="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-surface-container-lowest group">
+<img class="w-full h-full object-cover" data-alt="Wide perspective daytime urban boulevard traffic stream with asphalt lanes, sidewalks, vehicles in motion and pedestrians waiting at crosswalk under neutral daylight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6qOSKipy0jOSyr3hJJZK_mKktQ9C8tW2MOxbqGbTNjNntmMVwtlTF3_4khIdTD7YlgDLxtkMxbMqr2Zs4xGON95-Z1dxkMrmxdbTB6dFSSJjFFWVhMMKrY0kUFoVv3H1NwSaCWK7rErPsqF67sWpmdCuRSP-NFWvSbWOuKpJQcJpKjRPG5OS-TsNRKlQT-U9vnbPBDzXIUJALvmsSa9tuTarEjIN4fmc3CraCHb2JCx-dwdH20VfA"/>
+<!-- Watermark Stamp -->
+<div class="absolute bottom-3 left-3 px-2.5 py-1 rounded bg-surface-dim/85 backdrop-blur font-code-sm text-code-sm text-outline">
+                RAW_INPUT_FRAME #08942
+              </div>
+</div>
+</div>
+<!-- Right Column: Processed Image with SVG Bounding Overlays -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-2">
+<span class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                Processed Output (Inference Overlays)
+              </span>
+<span class="font-code-sm text-code-sm text-tertiary">YOLOv8x • Non-Max Supression 0.45</span>
+</div>
+<div class="relative w-full aspect-[16/10] rounded-2xl overflow-hidden bg-surface-container-lowest select-none group" id="detection-canvas-container">
+<!-- Underlying Base Image -->
+<img class="w-full h-full object-cover" data-alt="Dense urban city traffic crossing detected with high precision colored bounding boxes for cars pedestrians and traffic signals overlaying the asphalt road scene" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKRR47GFd54Tx_DkHXR7wEfCGDYNCI1epRyd5TnrsejDB1CjuLdGhrohx_n9wmkol-lLfca-RcEL1pjEsHYPYHbWwnM1QgOD5964s2Fy341SLtuUKiMzHeG8qkAhu6qBIWorr1pMdoCDBRV0T_IueaiIcqAdLQ8ClYdQFl-3W-jU97ZmorA_FbkazuvScx4pMymilQcjmbgWM4RGfYYOMY-Qcu3JkPqNmPkRuphQT8ZtbvFtV2JS9f"/>
+<!-- SVG Bounding Box Layer -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" id="svg-bounding-layer" preserveaspectratio="none" viewbox="0 0 1000 625">
+<!-- Box 1: Car 96.4% -->
+<g class="bbox-item bbox-car cursor-pointer pointer-events-auto" data-conf="96.4" data-id="bbox-1">
+<rect class="transition hover:fill-primary/25" fill="rgba(173,198,255,0.12)" height="150" rx="4" stroke="#adc6ff" stroke-width="2.5" width="220" x="180" y="240"></rect>
+<g class="bbox-tag-group">
+<rect fill="#002e6a" height="22" rx="4" width="105" x="180" y="218"></rect>
+<text fill="#adc6ff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="186" y="233">Car • 96.4%</text>
+</g>
+</g>
+<!-- Box 2: Pedestrian 94.1% -->
+<g class="bbox-item bbox-pedestrian cursor-pointer pointer-events-auto" data-conf="94.1" data-id="bbox-2">
+<rect class="transition hover:fill-tertiary/25" fill="rgba(78,222,163,0.12)" height="180" rx="4" stroke="#4edea3" stroke-width="2.5" width="60" x="520" y="210"></rect>
+<g class="bbox-tag-group">
+<rect fill="#003824" height="22" rx="4" width="135" x="520" y="188"></rect>
+<text fill="#4edea3" font-family="JetBrains Mono" font-size="12" font-weight="600" x="526" y="203">Pedestrian • 94.1%</text>
+</g>
+</g>
+<!-- Box 3: Traffic Light 91.8% -->
+<g class="bbox-item bbox-traffic cursor-pointer pointer-events-auto" data-conf="91.8" data-id="bbox-3">
+<rect class="transition hover:fill-secondary/25" fill="rgba(76,215,246,0.12)" height="110" rx="4" stroke="#4cd7f6" stroke-width="2.5" width="45" x="690" y="70"></rect>
+<g class="bbox-tag-group">
+<rect fill="#003640" height="22" rx="4" width="145" x="650" y="48"></rect>
+<text fill="#4cd7f6" font-family="JetBrains Mono" font-size="12" font-weight="600" x="656" y="63">Traffic Light • 91.8%</text>
+</g>
+</g>
+<!-- Box 4: Truck 89.5% -->
+<g class="bbox-item bbox-truck cursor-pointer pointer-events-auto" data-conf="89.5" data-id="bbox-4">
+<rect class="transition hover:fill-primary-fixed/25" fill="rgba(216,226,255,0.12)" height="200" rx="4" stroke="#d8e2ff" stroke-width="2.5" width="230" x="420" y="160"></rect>
+<g class="bbox-tag-group">
+<rect fill="#001a42" height="22" rx="4" width="115" x="420" y="138"></rect>
+<text fill="#d8e2ff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="426" y="153">Truck • 89.5%</text>
+</g>
+</g>
+<!-- Box 5: Bicycle 87.2% -->
+<g class="bbox-item bbox-bicycle cursor-pointer pointer-events-auto" data-conf="87.2" data-id="bbox-5">
+<rect class="transition hover:fill-tertiary-fixed/25" fill="rgba(111,251,190,0.12)" height="110" rx="4" stroke="#6ffbbe" stroke-width="2.5" width="90" x="60" y="320"></rect>
+<g class="bbox-tag-group">
+<rect fill="#002113" height="22" rx="4" width="125" x="60" y="298"></rect>
+<text fill="#6ffbbe" font-family="JetBrains Mono" font-size="12" font-weight="600" x="66" y="313">Bicycle • 87.2%</text>
+</g>
+</g>
+<!-- Box 6: Additional Car 93.2% -->
+<g class="bbox-item bbox-car cursor-pointer pointer-events-auto" data-conf="93.2" data-id="bbox-6">
+<rect class="transition hover:fill-primary/25" fill="rgba(173,198,255,0.12)" height="130" rx="4" stroke="#adc6ff" stroke-width="2.5" width="190" x="740" y="280"></rect>
+<g class="bbox-tag-group">
+<rect fill="#002e6a" height="22" rx="4" width="105" x="740" y="258"></rect>
+<text fill="#adc6ff" font-family="JetBrains Mono" font-size="12" font-weight="600" x="746" y="273">Car • 93.2%</text>
+</g>
+</g>
+</svg>
+<!-- Live HUD coordinate tracking footer -->
+<div class="absolute bottom-3 right-3 px-3 py-1 rounded bg-surface-dim/85 backdrop-blur font-code-sm text-code-sm text-secondary flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Active Detections: <strong id="active-count-display">14</strong></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Structured Detections Table & Interactive Highlighter -->
+<div class="w-full p-6 rounded-3xl bg-surface-container-low flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Spatial Detection Matrix</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Class probabilities and relative geometric bounding indices normalized to canvas resolution.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-medium transition flex items-center gap-1.5" onclick="triggerExportJSON()" type="button">
+<span class="material-symbols-outlined text-base text-secondary">data_object</span>
+              Export JSON
+            </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-medium transition flex items-center gap-1.5" onclick="toggleApiModal(true)" type="button">
+<span class="material-symbols-outlined text-base text-primary">terminal</span>
+              API Response
+            </button>
+</div>
+</div>
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-body-md text-body-md border-collapse">
+<thead>
+<tr class="font-label-sm text-label-sm text-outline uppercase border-b border-surface-container-highest/60">
+<th class="py-3 px-3">Class</th>
+<th class="py-3 px-3">Confidence Score</th>
+<th class="py-3 px-3">Bounding Box [x1, y1, x2, y2]</th>
+<th class="py-3 px-3">Area %</th>
+<th class="py-3 px-3 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-highest/30 font-code-sm text-code-sm">
+<tr class="hover:bg-surface-container transition" onmouseenter="highlightBBox('bbox-1')" onmouseleave="unhighlightBBox('bbox-1')">
+<td class="py-3 px-3 text-on-surface font-semibold flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded bg-primary"></span>
+                  Car (Sedan)
+                </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-3">
+<div class="w-24 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 96.4%;"></div>
+</div>
+<span class="text-primary font-bold">96.4%</span>
+</div>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">[180, 240, 400, 390]</td>
+<td class="py-3 px-3 text-on-surface-variant">5.28%</td>
+<td class="py-3 px-3 text-right">
+<button class="text-primary hover:underline font-label-sm text-label-sm font-semibold" type="button">Inspect</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition" onmouseenter="highlightBBox('bbox-2')" onmouseleave="unhighlightBBox('bbox-2')">
+<td class="py-3 px-3 text-on-surface font-semibold flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded bg-tertiary"></span>
+                  Pedestrian
+                </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-3">
+<div class="w-24 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 94.1%;"></div>
+</div>
+<span class="text-tertiary font-bold">94.1%</span>
+</div>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">[520, 210, 580, 390]</td>
+<td class="py-3 px-3 text-on-surface-variant">1.72%</td>
+<td class="py-3 px-3 text-right">
+<button class="text-tertiary hover:underline font-label-sm text-label-sm font-semibold" type="button">Inspect</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition" onmouseenter="highlightBBox('bbox-3')" onmouseleave="unhighlightBBox('bbox-3')">
+<td class="py-3 px-3 text-on-surface font-semibold flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded bg-secondary"></span>
+                  Traffic Light
+                </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-3">
+<div class="w-24 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 91.8%;"></div>
+</div>
+<span class="text-secondary font-bold">91.8%</span>
+</div>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">[690, 70, 735, 180]</td>
+<td class="py-3 px-3 text-on-surface-variant">0.79%</td>
+<td class="py-3 px-3 text-right">
+<button class="text-secondary hover:underline font-label-sm text-label-sm font-semibold" type="button">Inspect</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition" onmouseenter="highlightBBox('bbox-4')" onmouseleave="unhighlightBBox('bbox-4')">
+<td class="py-3 px-3 text-on-surface font-semibold flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded bg-primary-fixed"></span>
+                  Truck (Commercial)
+                </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-3">
+<div class="w-24 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary-fixed h-full rounded-full" style="width: 89.5%;"></div>
+</div>
+<span class="text-primary-fixed font-bold">89.5%</span>
+</div>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">[420, 160, 650, 360]</td>
+<td class="py-3 px-3 text-on-surface-variant">7.36%</td>
+<td class="py-3 px-3 text-right">
+<button class="text-primary-fixed hover:underline font-label-sm text-label-sm font-semibold" type="button">Inspect</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container transition" onmouseenter="highlightBBox('bbox-5')" onmouseleave="unhighlightBBox('bbox-5')">
+<td class="py-3 px-3 text-on-surface font-semibold flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded bg-tertiary-fixed"></span>
+                  Bicycle
+                </td>
+<td class="py-3 px-3">
+<div class="flex items-center gap-3">
+<div class="w-24 bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary-fixed h-full rounded-full" style="width: 87.2%;"></div>
+</div>
+<span class="text-tertiary-fixed font-bold">87.2%</span>
+</div>
+</td>
+<td class="py-3 px-3 text-on-surface-variant">[60, 320, 150, 430]</td>
+<td class="py-3 px-3 text-on-surface-variant">1.58%</td>
+<td class="py-3 px-3 text-right">
+<button class="text-tertiary-fixed hover:underline font-label-sm text-label-sm font-semibold" type="button">Inspect</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- 8. Recent Detection History Drawer & Verification Logs -->
+<section class="w-full px-gutter md:px-margin-desktop py-6">
+<div class="p-6 rounded-3xl bg-surface-container-low flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">history</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Recent Inference History</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Past model evaluations cached in persistent TensorRT Redis broker</p>
+</div>
+</div>
+<span class="font-code-sm text-code-sm text-outline">Showing 3 of 48 runs</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<!-- History Item 1 -->
+<div class="p-4 rounded-2xl bg-surface-container flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-tertiary font-semibold uppercase">2 mins ago</span>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface">ID: #INF-8849</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-12 rounded-lg bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Compact aerial thumbnail of city street traffic intersection during morning peak" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwjm17nxTgjJ11YgzfkE4T35X0G7bKr1vbH8sg3ZVn85r2NEyM8s2Sn633aVUleuilstd1lGhapPhbQZpDPxPl8sF_XkRobdlZXx7WDL5zVR_dC7KegIH0DyLHI7R1FodHvsStQCrTXTZe7WLJBj9XPV7MhLv4YZab1q2yiVVrhcAR03YZj9kpOzLRgFkqr0UUb_hFnwFRDDhdYoGYnIIhOFW_rSc6xrPpFZ-euCs0EErxMhtAkO72"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">urban_traffic_inspection_4k.jpg</span>
+<span class="font-code-sm text-code-sm text-outline">14 Objects • 38.2ms</span>
+</div>
+</div>
+<button class="w-full py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-label-sm text-label-sm font-semibold transition" onclick="setWorkflowState('COMPLETED')" type="button">Inspect Results</button>
+</div>
+<!-- History Item 2 -->
+<div class="p-4 rounded-2xl bg-surface-container flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-semibold uppercase">18 mins ago</span>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface">ID: #INF-8848</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-12 rounded-lg bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Automated robotic arm manufacturing plant inspection frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCo-lKLbk-F1k-kpzTcCczjoCA5XvQCMgYH1OTMnP8FsmypjXXMrl20HW0_hJ9F-WEolXgdruMV3e_F4Y-lLx_fmuf9tLRi8v84xeljGmngSDjhIDj6XT64jnxphTg3cFDRJwgGGfj7ZCrKGT93jr2IwHEMhd1jKvN5tIn3wiwLDsE9ODfwPxspOkpYXfa8UEBfOhh9_mNa5gDCsG-qmcqJ0ONu6N3IUfGNBZ_5LDfBsey1xn426g9c"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">assembly_line_camera_02.png</span>
+<span class="font-code-sm text-code-sm text-outline">9 Objects • 34.1ms</span>
+</div>
+</div>
+<button class="w-full py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold transition" type="button">Inspect Results</button>
+</div>
+<!-- History Item 3 -->
+<div class="p-4 rounded-2xl bg-surface-container flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline font-semibold uppercase">1 hr ago</span>
+<span class="font-code-sm text-code-sm px-2 py-0.5 rounded bg-surface-container-high text-on-surface">ID: #INF-8847</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-16 h-12 rounded-lg bg-surface-container-highest overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Warehouse automated pallet sorting logistics storage facility" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkkTDJZDf7qDVbBEdXVcxzqAkW5Xnvt43fzw43DjfFrtFr8tnV5SMT81XAkE9q27PSDyZZ8lGIpTeeH0iEOS9DzvSiunES0ihwq23m01OOKku1kGoLplpzWSiK1kHANjVgGCPLxGK_TcWdfms0yGg5IJd5I6zqLyagoH0W8BB-Ms5FLT6hVIeDNHdSck_tZ7wMXBQflgVzaGgvnBa5o5iPabMySlrEMnvxxZajoawaUCsh0Gl-bYX9"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface truncate">warehouse_bay_14_feed.jpg</span>
+<span class="font-code-sm text-code-sm text-outline">18 Objects • 41.5ms</span>
+</div>
+</div>
+<button class="w-full py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm font-semibold transition" type="button">Inspect Results</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 9. Backend Architecture Reference Bar (REST API Specs) -->
+<section class="w-full px-gutter md:px-margin-desktop pb-8">
+<div class="p-4 px-6 rounded-2xl bg-surface-container-lowest flex flex-col lg:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-lg">code</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Production REST Pipeline:</span>
+<span class="font-code-sm text-code-sm text-on-surface-variant">POST /api/v1/upload → POST /api/v1/detect → GET /api/v1/status/{job_id} → GET /api/v1/result/{job_id}</span>
+</div>
+<div class="flex items-center gap-3 font-code-sm text-code-sm text-outline">
+<span class="text-tertiary">TLS Encrypted</span>
+<span>•</span>
+<span>Swagger v3.1</span>
+<span>•</span>
+<span class="text-secondary">OpenAPI Spec Live</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Raw API Response Modal -->
+<div class="fixed inset-0 z-50 hidden bg-surface-dim/80 backdrop-blur-md flex items-center justify-center p-4" id="api-modal">
+<div class="w-full max-w-2xl rounded-3xl bg-surface-container-low shadow-2xl overflow-hidden flex flex-col">
+<div class="p-5 px-6 bg-surface-container flex items-center justify-between border-b border-surface-container-highest/60">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">FastAPI JSON Response Payload</span>
+<span class="px-2 py-0.5 rounded bg-tertiary/20 text-tertiary font-code-sm text-code-sm">200 OK</span>
+</div>
+<button class="text-outline hover:text-on-surface transition" onclick="toggleApiModal(false)" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-6 overflow-y-auto max-h-[614px] bg-surface-container-lowest font-code-sm text-code-sm text-on-surface-variant">
+<pre class="leading-relaxed"><code>{
+  "status": "success",
+  "job_id": "inf_9a48f2b7_cuda_yolov8x",
+  "timestamp": "2024-11-20T14:32:08.412Z",
+  "inference_telemetry": {
+    "engine": "TensorRT-FP16",
+    "device": "NVIDIA RTX 4090",
+    "preprocess_ms": 4.1,
+    "inference_ms": 29.8,
+    "nms_ms": 4.3,
+    "total_latency_ms": 38.2
+  },
+  "quality_assurance": {
+    "laplacian_variance": 88.54,
+    "quality_pass": true,
+    "artifacts_detected": 0
+  },
+  "detections_count": 14,
+  "objects": [
+    { "id": 1, "class": "car", "confidence": 0.964, "bbox": [180, 240, 400, 390], "area_pct": 5.28 },
+    { "id": 2, "class": "pedestrian", "confidence": 0.941, "bbox": [520, 210, 580, 390], "area_pct": 1.72 },
+    { "id": 3, "class": "traffic_light", "confidence": 0.918, "bbox": [690, 70, 735, 180], "area_pct": 0.79 },
+    { "id": 4, "class": "truck", "confidence": 0.895, "bbox": [420, 160, 650, 360], "area_pct": 7.36 },
+    { "id": 5, "class": "bicycle", "confidence": 0.872, "bbox": [60, 320, 150, 430], "area_pct": 1.58 },
+    { "id": 6, "class": "car", "confidence": 0.932, "bbox": [740, 280, 930, 410], "area_pct": 3.95 }
+  ]
+}</code></pre>
+</div>
+<div class="p-4 px-6 bg-surface-container flex items-center justify-between">
+<span class="font-code-sm text-code-sm text-outline">GET /api/v1/result/inf_9a48f2b7</span>
+<button class="px-4 py-2 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold transition" onclick="navigator.clipboard &amp;&amp; navigator.clipboard.writeText('{}'); toggleApiModal(false);" type="button">
+          Copy JSON &amp; Close
+        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Complete Interactive Workflow Client-Side Logic -->
+<script>
+  let currentWorkflowState = 'COMPLETED';
+  let simulationTimer = null;
+
+  function setWorkflowState(state) {
+    if (simulationTimer) clearInterval(simulationTimer);
+
+    // Hide all workflow sub-views
+    const views = [
+      'view-idle',
+      'view-uploading',
+      'view-uploaded',
+      'view-detecting',
+      'view-quality-failed',
+      'view-upload-failed',
+      'view-completed'
+    ];
+    views.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('hidden');
+    });
+
+    // Reset Stepper Styles
+    resetStepperUI();
+
+    currentWorkflowState = state;
+
+    if (state === 'IDLE') {
+      document.getElementById('view-idle').classList.remove('hidden');
+      updateStep(1, 'active', '01', 'Awaiting file');
+    } 
+    else if (state === 'UPLOADING') {
+      document.getElementById('view-uploading').classList.remove('hidden');
+      updateStep(1, 'active', '01', 'Uploading...');
+    } 
+    else if (state === 'UPLOADED') {
+      document.getElementById('view-uploaded').classList.remove('hidden');
+      updateStep(1, 'completed', 'check', 'Uploaded');
+      updateStep(2, 'active', '02', 'Laplace 88.5');
+    } 
+    else if (state === 'QUALITY_ACCEPTED') {
+      document.getElementById('view-uploaded').classList.remove('hidden');
+      updateStep(1, 'completed', 'check', 'Uploaded');
+      updateStep(2, 'completed', 'check', 'Laplace 88.5');
+      updateStep(3, 'ready', '03', 'Ready for inference');
+    }
+    else if (state === 'DETECTING') {
+      document.getElementById('view-detecting').classList.remove('hidden');
+      updateStep(1, 'completed', 'check', 'Uploaded');
+      updateStep(2, 'completed', 'check', 'Laplace 88.5');
+      updateStep(3, 'active', '03', 'TensorRT active');
+    }
+    else if (state === 'COMPLETED') {
+      document.getElementById('view-completed').classList.remove('hidden');
+      updateStep(1, 'completed', 'check', 'Uploaded');
+      updateStep(2, 'completed', 'check', 'Laplace 88.5');
+      updateStep(3, 'completed', 'check', '38.2ms pass');
+      updateStep(4, 'completed', 'check', '14 Objects Tagged');
+    }
+    else if (state === 'QUALITY_FAILED') {
+      document.getElementById('view-quality-failed').classList.remove('hidden');
+      updateStep(1, 'completed', 'check', 'Uploaded');
+      updateStep(2, 'failed', 'close', 'Blurry: 18.2');
+    }
+    else if (state === 'UPLOAD_FAILED') {
+      document.getElementById('view-upload-failed').classList.remove('hidden');
+      updateStep(1, 'failed', 'close', 'Failed');
+    }
+  }
+
+  function resetStepperUI() {
+    for (let i = 1; i <= 4; i++) {
+      const icon = document.getElementById(`step-icon-${i}`);
+      const desc = document.getElementById(`step-desc-${i}`);
+      if (icon) {
+        icon.className = 'w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-surface-container-highest text-outline flex-shrink-0';
+        icon.innerHTML = `0${i}`;
+      }
+      if (desc) {
+        desc.className = 'font-code-sm text-code-sm text-outline truncate';
+      }
+    }
+  }
+
+  function updateStep(stepIndex, mode, symbolText, descText) {
+    const icon = document.getElementById(`step-icon-${stepIndex}`);
+    const desc = document.getElementById(`step-desc-${stepIndex}`);
+    if (!icon || !desc) return;
+
+    desc.innerText = descText;
+
+    if (mode === 'active') {
+      icon.className = 'w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-primary text-on-primary ring-4 ring-primary/20 flex-shrink-0 animate-pulse';
+      icon.innerHTML = `<span class="material-symbols-outlined text-lg">${symbolText === 'check' ? 'check' : 'sync'}</span>`;
+      desc.className = 'font-code-sm text-code-sm text-primary truncate font-medium';
+    } else if (mode === 'completed') {
+      icon.className = 'w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-tertiary text-on-tertiary flex-shrink-0';
+      icon.innerHTML = '<span class="material-symbols-outlined text-lg">check</span>';
+      desc.className = 'font-code-sm text-code-sm text-tertiary truncate font-medium';
+    } else if (mode === 'failed') {
+      icon.className = 'w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-error text-on-error flex-shrink-0';
+      icon.innerHTML = '<span class="material-symbols-outlined text-lg">close</span>';
+      desc.className = 'font-code-sm text-code-sm text-error truncate font-medium';
+    } else if (mode === 'ready') {
+      icon.className = 'w-10 h-10 rounded-full flex items-center justify-center font-code-md text-code-md font-bold bg-secondary text-on-secondary flex-shrink-0';
+      icon.innerHTML = symbolText;
+      desc.className = 'font-code-sm text-code-sm text-secondary truncate';
+    }
+  }
+
+  function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const filenameEl = document.getElementById('uploaded-filename');
+      if (filenameEl) filenameEl.innerText = file.name;
+      simulateUploadSequence();
+    }
+  }
+
+  function loadSampleImage(type) {
+    const filenameEl = document.getElementById('uploaded-filename');
+    if (filenameEl) {
+      if (type === 'traffic') filenameEl.innerText = 'urban_traffic_inspection_4k.jpg';
+      if (type === 'industrial') filenameEl.innerText = 'factory_sorter_matrix_hd.jpg';
+      if (type === 'warehouse') filenameEl.innerText = 'warehouse_aisle_telemetry_raw.jpg';
+    }
+    simulateUploadSequence();
+  }
+
+  function simulateUploadSequence() {
+    setWorkflowState('UPLOADING');
+    const fill = document.getElementById('upload-progress-fill');
+    const statusText = document.getElementById('upload-status-text');
+    let progress = 15;
+
+    const interval = setInterval(() => {
+      progress += 25;
+      if (fill) fill.style.width = progress + '%';
+      if (statusText) statusText.innerText = `Uploading payload: ${progress}%`;
+
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(() => {
+          setWorkflowState('UPLOADED');
+        }, 400);
+      }
+    }, 280);
+  }
+
+  function startDetectionProcess() {
+    setWorkflowState('DETECTING');
+    const substepEl = document.getElementById('detecting-substep');
+    
+    setTimeout(() => {
+      if (substepEl) substepEl.innerText = 'Extracting feature pyramids (FPN 256ch)';
+    }, 700);
+
+    setTimeout(() => {
+      if (substepEl) substepEl.innerText = 'Running IoU Suppressions & Anchor pruning';
+    }, 1400);
+
+    setTimeout(() => {
+      setWorkflowState('COMPLETED');
+    }, 2200);
+  }
+
+  function triggerSimulationFlow() {
+    loadSampleImage('traffic');
+    setTimeout(() => {
+      startDetectionProcess();
+    }, 1800);
+  }
+
+  function updateConfidenceThreshold(val) {
+    const display = document.getElementById('threshold-value-display');
+    if (display) display.innerText = val + '%';
+
+    const bboxes = document.querySelectorAll('.bbox-item');
+    let count = 0;
+    bboxes.forEach(box => {
+      const conf = parseFloat(box.getAttribute('data-conf'));
+      if (conf < parseFloat(val)) {
+        box.style.display = 'none';
+      } else {
+        box.style.display = 'block';
+        count++;
+      }
+    });
+
+    const activeCountEl = document.getElementById('active-count-display');
+    if (activeCountEl) activeCountEl.innerText = count;
+  }
+
+  let layerState = { boxes: true, labels: true, scores: true };
+  function toggleOverlayLayer(layer) {
+    layerState[layer] = !layerState[layer];
+    const btn = document.getElementById(`toggle-${layer}-btn`);
+    if (btn) {
+      if (layerState[layer]) {
+        btn.classList.replace('text-outline', 'text-primary');
+        btn.classList.add('bg-surface-container-high');
+      } else {
+        btn.classList.replace('text-primary', 'text-outline');
+        btn.classList.remove('bg-surface-container-high');
+      }
+    }
+
+    if (layer === 'boxes') {
+      const rects = document.querySelectorAll('#svg-bounding-layer rect:not([rx="4"])');
+      rects.forEach(r => r.style.opacity = layerState.boxes ? '1' : '0');
+    }
+    if (layer === 'labels' || layer === 'scores') {
+      const tags = document.querySelectorAll('.bbox-tag-group');
+      tags.forEach(t => t.style.opacity = (layerState.labels && layerState.scores) ? '1' : '0');
+    }
+  }
+
+  function highlightBBox(id) {
+    const el = document.querySelector(`[data-id="${id}"] rect`);
+    if (el) {
+      el.setAttribute('stroke-width', '4.5');
+      el.setAttribute('fill', 'rgba(255,255,255,0.25)');
+    }
+  }
+
+  function unhighlightBBox(id) {
+    const el = document.querySelector(`[data-id="${id}"] rect`);
+    if (el) {
+      el.setAttribute('stroke-width', '2.5');
+      el.setAttribute('fill', 'rgba(173,198,255,0.12)');
+    }
+  }
+
+  function toggleApiModal(show) {
+    const modal = document.getElementById('api-modal');
+    if (!modal) return;
+    if (show) modal.classList.remove('hidden');
+    else modal.classList.add('hidden');
+  }
+
+  function triggerDownloadResult() {
+    alert("Synthesizing annotated 4K image with SVG spatial layer... (Export ready)");
+  }
+
+  function triggerExportJSON() {
+    toggleApiModal(true);
+  }
+
+  // Initialize in COMPLETED state for rich presentation out-of-the-box
+  window.addEventListener('DOMContentLoaded', () => {
+    setWorkflowState('COMPLETED');
+  });
+</script></main><footer class="w-full bg-surface-container-lowest py-space-lg shadow-[0_-1px_10px_rgba(0,0,0,0.2)]"><div class="w-full px-gutter md:px-margin-desktop flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-sm text-label-sm text-outline"><div class="flex items-center gap-space-sm font-code-sm"><span>SYSTEM MATRIX v4.2.8</span><span class="text-outline-variant">•</span><span>CUDA 12.2 ACTIVE</span><span class="text-outline-variant">•</span><span class="text-on-surface-variant">HOST: cv-edge-node-09</span></div><div>© 2024 AI Object Detection Systems Lab. Real-time Spatial Telemetry Architecture.</div></div></footer></body></html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Object Detection Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#171b26",
+            "on-tertiary-fixed-variant": "#005236",
+            "surface-container-highest": "#313540",
+            "on-primary-fixed-variant": "#004395",
+            "on-secondary-container": "#00424e",
+            "surface-dim": "#0f131d",
+            "surface-container": "#1c1f2a",
+            "on-secondary": "#003640",
+            "on-secondary-fixed": "#001f26",
+            "inverse-on-surface": "#2c303b",
+            "inverse-surface": "#dfe2f1",
+            "surface-tint": "#adc6ff",
+            "on-primary-container": "#00285d",
+            "on-secondary-fixed-variant": "#004e5c",
+            "on-tertiary-fixed": "#002113",
+            "tertiary": "#4edea3",
+            "surface-variant": "#313540",
+            "outline-variant": "#424754",
+            "tertiary-container": "#00a572",
+            "primary-fixed-dim": "#adc6ff",
+            "on-background": "#dfe2f1",
+            "on-primary-fixed": "#001a42",
+            "surface-container-lowest": "#0a0e18",
+            "error": "#ffb4ab",
+            "on-error-container": "#ffdad6",
+            "primary": "#adc6ff",
+            "on-surface-variant": "#c2c6d6",
+            "error-container": "#93000a",
+            "on-tertiary-container": "#00311f",
+            "on-primary": "#002e6a",
+            "inverse-primary": "#005ac2",
+            "secondary-fixed": "#acedff",
+            "primary-fixed": "#d8e2ff",
+            "surface": "#0f131d",
+            "on-error": "#690005",
+            "secondary": "#4cd7f6",
+            "primary-container": "#4d8eff",
+            "background": "#0f131d",
+            "on-surface": "#dfe2f1",
+            "outline": "#8c909f",
+            "tertiary-fixed-dim": "#4edea3",
+            "surface-bright": "#353944",
+            "tertiary-fixed": "#6ffbbe",
+            "surface-container-high": "#262a35",
+            "secondary-fixed-dim": "#4cd7f6",
+            "on-tertiary": "#003824",
+            "secondary-container": "#03b5d3"
+          },
+          fontFamily: {
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "code-md": ["JetBrains Mono"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen flex flex-col justify-between">
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-surface-container-highest/40">
+<div class="h-16 w-full px-4 md:px-8 flex items-center justify-between gap-4">
+<div class="flex items-center gap-6 min-w-0">
+<div class="flex items-center gap-3">
+<img alt="VisionPulse AI Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1UlQdNkHT2a_dPfO7Czg5etGq5UB4C_cpejNCY_JxwX_Fbc14YceOttXFkXatiB0H4lcmkDqoUhBoXLzRXTx9JeWc91bydXaozddVPMEPgG3tIYF1HHVweIxxLZbsXNG1msCmn9_SJNZpxCJqXck-ZbR4sr2U6SZGWmAo7XSi9s3p-1m2vmCOp6kY0Iuo-kbP49_j0YJUreVTCggBXev3yKjQr2A12WNzuvc11Ml4e8ljD80m3JSen7gw"/>
+<div class="flex flex-col truncate">
+<span class="font-headline-sm text-sm md:text-base font-semibold text-on-surface tracking-tight leading-none">AI Object Detection Dashboard</span>
+<span class="font-code-sm text-[11px] text-outline mt-0.5 tracking-tight uppercase">Trained Model Inference System</span>
+</div>
+</div>
+<div class="h-5 w-px bg-surface-container-highest hidden sm:block"></div>
+<nav class="hidden md:flex items-center gap-1 p-1 bg-surface-container-lowest rounded-xl">
+<a class="px-3.5 py-1.5 font-label-md text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors" href="#">Dashboard</a>
+<a aria-current="page" class="px-3.5 py-1.5 font-label-md text-xs font-semibold bg-surface-container text-primary rounded-lg shadow-sm" href="#">Detection</a>
+<a class="px-3.5 py-1.5 font-label-md text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors" href="#">History</a>
+<a class="px-3.5 py-1.5 font-label-md text-xs font-medium text-on-surface-variant hover:text-on-surface transition-colors" href="#">About</a>
+</nav>
+</div>
+<div class="flex items-center gap-3">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-tertiary/20 shadow-[0_0_12px_rgba(78,222,163,0.12)]">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-label-sm text-[11px] text-tertiary font-semibold tracking-wider uppercase">Model Online</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Body -->
+<main class="w-full pt-20 pb-12 flex-1">
+<div class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col gap-6">
+<!-- Hero Header -->
+<section class="pt-4 pb-2">
+<h1 class="text-2xl md:text-3xl lg:text-4xl font-bold text-on-surface tracking-tight">AI-Powered Object Detection</h1>
+<p class="text-sm md:text-base text-on-surface-variant mt-1.5 max-w-3xl">Upload an image and use our trained object detection model to identify objects automatically.</p>
+</section>
+<!-- 4 Stages Visual Stepper -->
+<section class="w-full p-4 md:p-5 rounded-2xl bg-surface-container-low border border-surface-container-highest/40 shadow-sm">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+<!-- Step 1 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 border border-surface-container-highest/30 transition-all" id="step-node-1">
+<div class="w-9 h-9 rounded-full flex items-center justify-center font-code-md text-xs font-bold bg-tertiary text-on-tertiary flex-shrink-0" id="step-icon-1">
+<span class="material-symbols-outlined text-base">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Stage 01</span>
+<span class="font-label-md text-xs md:text-sm font-semibold text-on-surface truncate">Image Upload</span>
+<span class="font-code-sm text-[11px] text-tertiary truncate" id="step-desc-1">Ready</span>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 border border-surface-container-highest/30 transition-all" id="step-node-2">
+<div class="w-9 h-9 rounded-full flex items-center justify-center font-code-md text-xs font-bold bg-tertiary text-on-tertiary flex-shrink-0" id="step-icon-2">
+<span class="material-symbols-outlined text-base">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Stage 02</span>
+<span class="font-label-md text-xs md:text-sm font-semibold text-on-surface truncate">Quality Check</span>
+<span class="font-code-sm text-[11px] text-tertiary truncate" id="step-desc-2">Passed</span>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 border border-surface-container-highest/30 transition-all" id="step-node-3">
+<div class="w-9 h-9 rounded-full flex items-center justify-center font-code-md text-xs font-bold bg-tertiary text-on-tertiary flex-shrink-0" id="step-icon-3">
+<span class="material-symbols-outlined text-base">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Stage 03</span>
+<span class="font-label-md text-xs md:text-sm font-semibold text-on-surface truncate">Object Detection</span>
+<span class="font-code-sm text-[11px] text-tertiary truncate" id="step-desc-3">Completed</span>
+</div>
+</div>
+<!-- Step 4 -->
+<div class="flex items-center gap-3 p-3 rounded-xl bg-surface-container/70 border border-surface-container-highest/30 transition-all" id="step-node-4">
+<div class="w-9 h-9 rounded-full flex items-center justify-center font-code-md text-xs font-bold bg-primary text-on-primary flex-shrink-0" id="step-icon-4">
+<span class="material-symbols-outlined text-base">task_alt</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-sm text-[10px] text-outline uppercase tracking-wider">Stage 04</span>
+<span class="font-label-md text-xs md:text-sm font-semibold text-on-surface truncate">Complete</span>
+<span class="font-code-sm text-[11px] text-primary truncate" id="step-desc-4">Tagged Output</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Primary Controls Ribbon (Upload action, Run button & Confidence Slider) -->
+<section class="p-4 md:p-5 rounded-2xl bg-surface-container-low border border-surface-container-highest/40 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+<!-- Upload Trigger & File state -->
+<div class="flex items-center gap-3 min-w-0">
+<label id="drop-zone" class="cursor-pointer px-6 py-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface text-sm md:text-base font-medium transition-colors border-2 border-dashed border-primary/40 hover:border-primary flex items-center gap-2 flex-shrink-0">
+<span class="material-symbols-outlined text-lg text-primary">add_photo_alternate</span>
+<span>Choose or Drop Image</span>
+<input accept="image/*" class="hidden" id="file-input" onchange="handleFileChange(this)" type="file"/>
+</label>
+<div class="flex flex-col truncate">
+<span class="text-xs md:text-sm font-semibold text-on-surface truncate" id="active-filename">No image selected</span>
+<span class="text-[11px] font-code-sm text-outline truncate">Upload an image to begin</span>
+</div>
+</div>
+<!-- Controls: Confidence Slider & Run Button -->
+<div class="flex flex-wrap items-center gap-4 justify-between md:justify-end">
+<!-- Confidence Threshold Setting -->
+<div class="flex items-center gap-3 px-3 py-1.5 rounded-xl bg-surface-container border border-surface-container-highest/50">
+<span class="material-symbols-outlined text-primary text-base">tune</span>
+<label class="text-xs font-semibold text-on-surface uppercase tracking-wider whitespace-nowrap" for="confidence-range">Min Confidence:</label>
+<input class="w-24 md:w-28 accent-primary cursor-pointer" id="confidence-range" max="95" min="30" oninput="handleThresholdChange(this.value)" type="range" value="50"/>
+<span class="font-code-sm text-xs font-bold text-primary w-8 text-right" id="confidence-val">50%</span>
+</div>
+<!-- Prominent Execute Detection Button -->
+<button class="px-6 py-2.5 rounded-xl bg-primary text-on-primary hover:bg-primary/90 font-label-md text-xs md:text-sm font-semibold transition-all shadow-lg shadow-primary/20 flex items-center gap-2" id="run-detection-btn" onclick="executeModelRun()" type="button">
+<span class="material-symbols-outlined text-lg" id="run-icon">radar</span>
+<span id="run-btn-text">Execute Detection</span>
+</button>
+</div>
+</section>
+<!-- Side-by-Side Input and Output Comparison Canvas -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+<!-- Left: Original Image Preview -->
+<div class="flex flex-col gap-2 p-4 md:p-5 rounded-2xl bg-surface-container-low border border-surface-container-highest/40">
+<div class="flex items-center justify-between pb-2 border-b border-surface-container-highest/40">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<h2 class="text-xs md:text-sm font-semibold text-on-surface uppercase tracking-wider">Original Image (Input)</h2>
+</div>
+<span class="font-code-sm text-[11px] text-outline">Source Feed</span>
+</div>
+<div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-surface-container-lowest mt-1">
+<img alt="Original Image" class="w-full h-full object-contain" id="original-image-view" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="/>
+<div class="absolute bottom-2.5 left-2.5 px-2.5 py-1 rounded bg-surface-dim/80 backdrop-blur font-code-sm text-[10px] text-on-surface-variant">
+              Raw Input Payload
+            </div>
+</div>
+</div>
+<!-- Right: Processed Result with Bounding Boxes -->
+<div class="flex flex-col gap-2 p-4 md:p-5 rounded-2xl bg-surface-container-low border border-surface-container-highest/40">
+<div class="flex items-center justify-between pb-2 border-b border-surface-container-highest/40">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<h2 class="text-xs md:text-sm font-semibold text-primary uppercase tracking-wider">Processed Output (Detected Objects)</h2>
+</div>
+<span class="font-code-sm text-[11px] text-tertiary" id="active-tag-count"></span>
+</div>
+<div class="relative w-full aspect-[16/10] rounded-xl overflow-hidden bg-surface-container-lowest mt-1" id="processed-container">
+<!-- Detection Image -->
+<img alt="Processed Image" class="w-full h-full object-contain" id="processed-image-view" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="/>
+
+<!-- Processing overlay indicator during run -->
+<div class="absolute inset-0 bg-surface-dim/80 backdrop-blur-sm hidden flex-col items-center justify-center gap-3 transition-opacity" id="run-processing-spinner">
+<span class="material-symbols-outlined text-4xl text-primary animate-spin">sync</span>
+<span class="font-headline-sm text-sm font-semibold text-on-surface">Running Inference Model...</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Concise Summary of Detected Objects -->
+<section class="p-5 rounded-2xl bg-surface-container-low border border-surface-container-highest/40 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary/15 text-tertiary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-xl">category</span>
+</div>
+<div>
+<h3 class="text-sm md:text-base font-semibold text-on-surface" id="summary-title">Awaiting Detection</h3>
+<p class="text-xs text-on-surface-variant mt-0.5">Upload an image to see results here.</p>
+</div>
+</div>
+<!-- Clean class tags pills -->
+<div class="flex flex-wrap items-center gap-2 font-code-sm text-xs" id="tags-container">
+<!-- Tags will be dynamically inserted here -->
+</div>
+</section>
+</div>
+</main>
+<!-- Clean Footer -->
+<footer class="w-full bg-surface-container-lowest py-4 border-t border-surface-container-highest/40">
+<div class="max-w-7xl mx-auto px-4 md:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-outline">
+<div class="flex items-center gap-2 font-code-sm">
+<span>VisionPulse AI</span>
+<span>•</span>
+<span>Neural Inference System</span>
+</div>
+<div>© 2024 AI Object Detection Systems Lab. All rights reserved.</div>
+</div>
+</footer>
+<!-- Interactive Logic -->
+<script>
+    function handleThresholdChange(val) {
+      document.getElementById('confidence-val').innerText = val + '%';
+      const items = document.querySelectorAll('.bbox-item');
+      let visibleCount = 0;
+      items.forEach(el => {
+        const conf = parseInt(el.getAttribute('data-conf'), 10);
+        if (conf < parseInt(val, 10)) {
+          el.style.display = 'none';
+        } else {
+          el.style.display = '';
+          visibleCount++;
+        }
+      });
+      const tagCount = document.getElementById('active-tag-count');
+      if (tagCount) {
+        tagCount.innerText = `${visibleCount} Objects Identified`;
+      }
+    }
+
+    function handleFileChange(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        document.getElementById('active-filename').innerText = file.name;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('original-image-view').src = e.target.result;
+          document.getElementById('processed-image-view').src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="; // Keep output clean until executed
+          document.getElementById('summary-title').innerText = "Awaiting Detection";
+          document.getElementById('active-tag-count').innerText = "";
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function executeModelRun() {
+      const spinner = document.getElementById('run-processing-spinner');
+      const btn = document.getElementById('run-detection-btn');
+      const btnText = document.getElementById('run-btn-text');
+      const runIcon = document.getElementById('run-icon');
+
+      spinner.classList.remove('hidden');
+      spinner.classList.add('flex');
+      btn.disabled = true;
+      btn.classList.add('opacity-80');
+      btnText.innerText = 'Detecting...';
+      runIcon.classList.add('animate-spin');
+
+      // Hide the dummy SVG boxes from the Stitch design
+      const dummySvg = document.getElementById('svg-bounding-layer');
+      if (dummySvg) dummySvg.style.display = 'none';
+
+      try {
+        const fileInput = document.getElementById('file-input');
+        if (!fileInput.files || !fileInput.files[0]) {
+          alert('Please choose an image first!');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+
+        // Send the image to our FastAPI backend
+        const response = await fetch('http://localhost:8000/predict', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          const errData = await response.json();
+          alert(`Inference Rejected: ${errData.reason || 'Unknown API Error'}`);
+          throw new Error('API Error');
+        }
+
+        const data = await response.json();
+
+        // 1. Display Processed Image (now sent as a base64 string)
+        document.getElementById('processed-image-view').src = data.image;
+
+        // 2. Update the Summary text
+        document.getElementById('summary-title').innerText = `${data.object_count} Objects Detected`;
+        document.getElementById('active-tag-count').innerText = `${data.object_count} Objects`;
+
+        // 3. Render the Average Confidence Tags!
+        const tagsContainer = document.getElementById('tags-container');
+        tagsContainer.innerHTML = ''; // Clear previous
+
+        for (const [cls, avgConf] of Object.entries(data.stats)) {
+          tagsContainer.innerHTML += `
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container border border-surface-container-highest/50 text-primary">
+              <span class="w-2 h-2 rounded-full bg-primary"></span>
+              <span>${cls} <span class="text-outline font-semibold ml-1">Avg ${avgConf}%</span></span>
+            </span>
+          `;
+        }
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        spinner.classList.add('hidden');
+        spinner.classList.remove('flex');
+        btn.disabled = false;
+        btn.classList.remove('opacity-80');
+        btnText.innerText = 'Execute Detection';
+        runIcon.classList.remove('animate-spin');
+      }
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const dropZone = document.getElementById('drop-zone');
+      const fileInput = document.getElementById('file-input');
+
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-primary', 'bg-surface-container-high');
+      });
+      dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-primary', 'bg-surface-container-high');
+      });
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-primary', 'bg-surface-container-high');
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          fileInput.files = e.dataTransfer.files;
+          handleFileChange(fileInput);
+        }
+      });
+    });
+  </script>
+</body></html>
